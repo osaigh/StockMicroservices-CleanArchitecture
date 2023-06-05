@@ -1,0 +1,43 @@
+version: '3.4'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine  
+
+  mongo:
+    image: mongo
+
+  mongo-express:
+    image: mongo-express
+
+  stockmicroservices.stockmarketupdater:
+    image: ${DOCKER_REGISTRY-}stockmarketupdater
+    build:
+      context: .
+      dockerfile: StockMicroservices.StockMarketUpdater/Dockerfile
+
+  stockmicroservices.api:
+    image: ${DOCKER_REGISTRY-}stockmicroservicesapi
+    build:
+      context: .
+      dockerfile: StockMicroservices.API/Dockerfile
+
+  stockmicroservices.apigateway:
+    image: ${DOCKER_REGISTRY-}stockapigateway
+    build:
+      context: .
+      dockerfile: StockMicroservices.APIGateway/Dockerfile
+
+
+  stockmicroservices.identityserver:
+    image: ${DOCKER_REGISTRY-}stockidentityserver
+    build:
+      context: .
+      dockerfile: StockMicroservices.IdentityServer/Dockerfile
+
+  stockmicroservices.webclient:
+    image: ${DOCKER_REGISTRY-}stockwebclient
+    build:
+      context: .
+      dockerfile: StockMicroservices.WebClient/ClientApp/Dockerfile
+
